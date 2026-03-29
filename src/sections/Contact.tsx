@@ -2,12 +2,16 @@ import { Mail, Phone } from 'lucide-react';
 import { useState, FormEvent } from 'react';
 import { send } from '@emailjs/browser';
 
+const isValidEmail = (value: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
 export default function Contact() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState('');
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
   const [copied, setCopied] = useState(false);
 
   const contactEmail = 'vyquy633@gmail.com';
@@ -25,12 +29,20 @@ export default function Contact() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!name.trim() || !email.trim() || !message.trim()) {
+    const validationErrors: { name?: string; email?: string; message?: string } = {};
+    if (!name.trim()) validationErrors.name = 'Name is required.';
+    if (!email.trim()) validationErrors.email = 'Email is required.';
+    else if (!isValidEmail(email)) validationErrors.email = 'Please enter a valid email address.';
+    if (!message.trim()) validationErrors.message = 'Message is required.';
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       setStatus('error');
-      setStatusMessage('Please fill in all fields before sending.');
+      setStatusMessage('Please fix the highlighted fields before sending.');
       return;
     }
 
+    setErrors({});
     setStatus('sending');
     setStatusMessage('Sending your message...');
 
@@ -109,27 +121,42 @@ export default function Contact() {
                 </div>
               )}
 
-              <input
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                type="text"
-                placeholder="Your Name"
-                className="w-full bg-surface-container-highest border border-outline-variant/30 rounded-xl px-6 py-3 text-white placeholder-on-surface-variant focus:outline-none focus:border-secondary transition-colors"
-              />
-              <input
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                type="email"
-                placeholder="Your Email"
-                className="w-full bg-surface-container-highest border border-outline-variant/30 rounded-xl px-6 py-3 text-white placeholder-on-surface-variant focus:outline-none focus:border-secondary transition-colors"
-              />
-              <textarea
-                value={message}
-                onChange={(event) => setMessage(event.target.value)}
-                placeholder="Your Message"
-                rows={5}
-                className="w-full bg-surface-container-highest border border-outline-variant/30 rounded-xl px-6 py-3 text-white placeholder-on-surface-variant focus:outline-none focus:border-secondary transition-colors resize-none"
-              ></textarea>
+              <div>
+                <input
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  type="text"
+                  placeholder="Your Name"
+                  className={`w-full bg-surface-container-highest border rounded-xl px-6 py-3 text-white placeholder-on-surface-variant focus:outline-none focus:border-secondary transition-colors ${
+                    errors.name ? 'border-rose-400/70' : 'border-outline-variant/30'
+                  }`}
+                />
+                {errors.name && <p className="mt-2 text-xs text-rose-300">{errors.name}</p>}
+              </div>
+              <div>
+                <input
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  type="email"
+                  placeholder="Your Email"
+                  className={`w-full bg-surface-container-highest border rounded-xl px-6 py-3 text-white placeholder-on-surface-variant focus:outline-none focus:border-secondary transition-colors ${
+                    errors.email ? 'border-rose-400/70' : 'border-outline-variant/30'
+                  }`}
+                />
+                {errors.email && <p className="mt-2 text-xs text-rose-300">{errors.email}</p>}
+              </div>
+              <div>
+                <textarea
+                  value={message}
+                  onChange={(event) => setMessage(event.target.value)}
+                  placeholder="Your Message"
+                  rows={5}
+                  className={`w-full bg-surface-container-highest border rounded-xl px-6 py-3 text-white placeholder-on-surface-variant focus:outline-none focus:border-secondary transition-colors resize-none ${
+                    errors.message ? 'border-rose-400/70' : 'border-outline-variant/30'
+                  }`}
+                ></textarea>
+                {errors.message && <p className="mt-2 text-xs text-rose-300">{errors.message}</p>}
+              </div>
               <button
                 type="submit"
                 disabled={status === 'sending'}
