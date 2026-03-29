@@ -137,17 +137,14 @@ const SKILL_CATEGORIES = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto overflow-x-hidden">
-      <div className="text-center mb-10 sm:mb-14 lg:mb-16">
-        <p className="font-label text-[10px] sm:text-xs tracking-[0.25em] sm:tracking-[0.4em] text-secondary uppercase mb-3 sm:mb-4">
-          Tech stack
-        </p>
-        <h2 className="font-headline font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-2 sm:mb-4 px-2">
-          Skills
-        </h2>
+    <section id="skills" className="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+      <div className="text-center mb-16">
+        <p className="font-label text-xs tracking-[0.4em] text-secondary uppercase mb-4">Tech stack</p>
+        <h2 className="font-headline font-black text-5xl md:text-6xl text-white mb-4">Skills</h2>
+        
       </div>
 
-      <div className="space-y-10 sm:space-y-12 lg:space-y-14">
+      <div className="space-y-14">
         {SKILL_CATEGORIES.map((cat, i) => (
           <motion.div
             key={cat.title}
@@ -156,16 +153,16 @@ export default function Skills() {
             viewport={{ once: true }}
             transition={{ delay: Math.min(i * 0.05, 0.3) }}
           >
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
-              <span className="text-lg sm:text-xl shrink-0" aria-hidden>
+            <div className="flex items-center gap-3 mb-5">
+              <span className="text-xl shrink-0" aria-hidden>
                 {cat.emoji}
               </span>
-              <h3 className="font-headline font-bold text-base sm:text-lg md:text-xl text-white leading-snug min-w-0 flex-1 sm:flex-none">
+              <h3 className="font-headline font-bold text-lg md:text-xl text-white whitespace-nowrap shrink-0">
                 {cat.title}
               </h3>
-              <div className="hidden sm:block h-px flex-1 bg-gradient-to-r from-outline-variant/60 to-transparent min-w-[2rem]" />
+              <div className="h-px flex-1 bg-gradient-to-r from-outline-variant/60 to-transparent min-w-[2rem]" />
             </div>
-            <div className="flex flex-wrap gap-1.5 sm:gap-2 md:gap-3">
+            <div className="flex flex-wrap gap-2 md:gap-3">
               {cat.badges.map((b) => (
                 <img
                   key={b.alt + b.src}
@@ -175,7 +172,7 @@ export default function Skills() {
                   loading="lazy"
                   decoding="async"
                   referrerPolicy="no-referrer"
-                  className="h-6 sm:h-7 md:h-8 max-w-[100%] w-auto rounded-md border border-outline-variant/20 select-none hover:border-secondary/40 transition-colors"
+                  className="h-7 md:h-8 w-auto rounded-md border border-outline-variant/20 select-none hover:border-secondary/40 transition-colors"
                 />
               ))}
             </div>
