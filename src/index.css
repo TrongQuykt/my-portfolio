@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --font-headline: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-label: "Space Grotesk", ui-monospace, SFMono-Regular, monospace;
+
+  --color-surface: #0b1326;
+  --color-surface-container: #171f33;
+  --color-surface-container-low: #131b2e;
+  --color-surface-container-high: #222a3d;
+  --color-surface-container-highest: #2d3449;
+  --color-surface-bright: #31394d;
+  --color-surface-dim: #0b1326;
+  
+  --color-on-surface: #dae2fd;
+  --color-on-surface-variant: #c1c6d7;
+  
+  --color-primary: #c6c6c7;
+  --color-secondary: #c0c1ff;
+  --color-tertiary: #ddb7ff;
+  
+  --color-outline: #8b90a0;
+  --color-outline-variant: #414755;
+  
+  --color-secondary-container: #3131c0;
+  --color-tertiary-container: #b76dff;
+
+  --radius-full: 0.75rem;
+  --radius-xl: 0.5rem;
+  --radius-lg: 0.25rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-on-surface font-body selection:bg-secondary/30 selection:text-white overflow-x-hidden min-h-[100dvh];
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-surface-container-highest/40 backdrop-blur-xl border border-white/10;
+  }
+  
+  .signature-glow {
+    @apply bg-linear-to-br from-secondary to-tertiary;
+  }
+  
+  .ambient-aura {
+    @apply blur-[100px] opacity-15 bg-[radial-gradient(circle,_#3131c0_0%,_transparent_70%)];
+  }
+}
+
+.light {
+  --color-surface: #f7f7fb;
+  --color-surface-container: #ffffff;
+  --color-surface-container-low: #f2f2f7;
+  --color-surface-container-high: #e5e7f0;
+  --color-surface-container-highest: #ffffff;
+  --color-surface-bright: #eef0f7;
+  --color-surface-dim: #dfe2ec;
+
+  --color-on-surface: #111827;
+  --color-on-surface-variant: #4b5563;
+
+  --color-primary: #1f2937;
+  --color-secondary: #2563eb;
+  --color-tertiary: #7c3aed;
+
+  --color-outline: #9ca3af;
+  --color-outline-variant: #d1d5db;
+
+  --color-secondary-container: #e0e7ff;
+  --color-tertiary-container: #ede9fe;
+}
+
+.light .text-white,
+.light .hover\:text-white:hover,
+.light .group-hover\/item\:text-white:hover,
+.light .group-hover\:text-white:hover {
+  color: var(--color-on-surface) !important;
+}
+
+.light a:hover,
+.light button:hover {
+  color: var(--color-on-surface) !important;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
