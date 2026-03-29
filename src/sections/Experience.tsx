@@ -11,7 +11,7 @@ export default function Experience() {
       duration: '9 months',
       icon: Database,
       status: 'Previous',
-      logo: 'src/assets/images/logos/images.png',
+      logo: 'public/assets/images/logos/images.png',
       metrics: ['PHP on AWS (production-style)', '3-tier architecture', 'Security & observability'],
       points: [
         'Deployed PHP web applications on AWS following a production-oriented setup.',
@@ -29,7 +29,7 @@ export default function Experience() {
       duration: '5 months',
       icon: Terminal,
       status: 'Previous',
-      logo: 'src/assets/images/logos/113854logo1.webp',
+      logo: 'public/assets/images/logos/113854logo1.webp',
       metrics: ['PHP + MySQL', 'MVC architecture', 'Event & exhibition sites'],
       points: [
         'Gathered business requirements and designed web systems for events and product exhibitions serving Korean companies in Vietnam.',

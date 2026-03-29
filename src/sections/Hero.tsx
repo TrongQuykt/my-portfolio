@@ -37,7 +37,7 @@ export default function Hero() {
   type="button"
   onClick={() => {
     const link = document.createElement('a');
-    link.href = 'src/assets/files/CV_VyTrongQuy_FullStack .pdf';        // ← Đường dẫn đến file PDF
+    link.href = 'public/assets/files/CV_VyTrongQuy_FullStack .pdf';        // ← Đường dẫn đến file PDF
     link.download = 'CV_VyTrongQuy_FullStack.pdf';    // ← Tên file khi tải về
     document.body.appendChild(link);
     link.click();
@@ -152,7 +152,7 @@ export default function Hero() {
               <img
                 alt="Senior Engineer Portrait"
                 className="w-full h-full object-cover rounded-2xl group-hover:brightness-110 transition-all duration-700"
-                src="src/assets/images/Vy_Trong_Quy.jpg"
+                src="public/assets/images/Vy_Trong_Quy.jpg"
                 referrerPolicy="no-referrer"
               />
             </div>
