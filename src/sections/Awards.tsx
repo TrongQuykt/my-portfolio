@@ -31,7 +31,7 @@ export default function Awards() {
     
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % awards.length);
-    }, 3000);
+    }, 8000);
     
     return () => clearInterval(interval);
   }, [autoPlay, awards.length]);
@@ -120,7 +120,7 @@ export default function Awards() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col lg:flex-row gap-8 lg:gap-10 bg-surface-container-highest p-5 sm:p-8 lg:p-12 rounded-2xl sm:rounded-3xl border border-outline-variant/10 min-h-0 lg:min-h-80 overflow-hidden"
+            className="flex flex-col lg:flex-row gap-8 lg:gap-10 bg-surface-container-highest p-5 sm:p-8 lg:p-12 rounded-2xl sm:rounded-3xl border border-outline-variant/10 min-h-[36rem] lg:min-h-[42rem] overflow-hidden"
           >
             {/* Left: Images with thumbnail gallery */}
             <div className="flex-shrink-0 flex flex-col items-center gap-3 sm:gap-4 w-full lg:w-auto">
