@@ -152,7 +152,7 @@ export default function Navbar() {
     <>
       <nav
         className={cn(
-          'fixed top-0 w-full z-50 transition-all duration-300 border-b border-white/0',
+          'fixed top-0 w-full z-50 transition-colors duration-300 border-b border-white/0',
           navBg,
           scrolled ? 'py-3 sm:py-4' : 'py-4 sm:py-6'
         )}
@@ -187,7 +187,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={toggleTheme}
-              className={`p-2 rounded-lg transition-all duration-300 active:scale-95 ${navText}`}
+              className={`p-2 rounded-lg transition-colors duration-300 active:scale-95 ${navText}`}
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
