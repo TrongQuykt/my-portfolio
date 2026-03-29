@@ -1,5 +1,6 @@
 import { Mail, Phone } from 'lucide-react';
 import { useState, FormEvent } from 'react';
+import { send } from '@emailjs/browser';
 
 export default function Contact() {
   const [name, setName] = useState('');
@@ -7,6 +8,19 @@ export default function Contact() {
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  const contactEmail = 'vyquy633@gmail.com';
+
+  const copyEmailToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(contactEmail);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error('Copy failed', error);
+    }
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -20,26 +34,24 @@ export default function Contact() {
     setStatus('sending');
     setStatusMessage('Sending your message...');
 
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('message', message);
-    formData.append('_subject', `New contact request from ${name}`);
-    formData.append('_captcha', 'false');
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID';
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID';
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
+
+    if (serviceId === 'YOUR_SERVICE_ID' || templateId === 'YOUR_TEMPLATE_ID' || publicKey === 'YOUR_PUBLIC_KEY') {
+      setStatus('error');
+      setStatusMessage('EmailJS is not configured. Add VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY.');
+      return;
+    }
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/vyquy633@gmail.com', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Accept: 'application/json',
-        },
-      });
-
-      const data = await response.json();
-      if (!response.ok || data.success === 'false') {
-        throw new Error(data.message || 'Unable to send email.');
-      }
+      await send(serviceId, templateId, {
+        from_name: name,
+        from_email: email,
+        reply_to: email,
+        subject: `Contact request from ${name}`,
+        message,
+      }, publicKey);
 
       setStatus('success');
       setStatusMessage('Message sent! I will read it and reply soon.');
@@ -64,9 +76,20 @@ export default function Contact() {
               Ready to transform your vision into reality? Let's collaborate and create solutions that don't just meet expectations—they exceed them.
             </p>
             <div className="space-y-4 text-sm">
-              <a href="mailto:vyquy633@gmail.com" className="flex flex-wrap items-center gap-3 text-on-surface-variant hover:text-secondary transition-colors">
-                <Mail size={20} /> vyquy633@gmail.com
-              </a>
+              <div className="flex flex-wrap items-center gap-3 text-on-surface-variant">
+                <Mail size={20} />
+                <span>{contactEmail}</span>
+                <button
+                  type="button"
+                  onClick={copyEmailToClipboard}
+                  className="inline-flex items-center rounded-full border border-outline-variant/30 px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-secondary hover:bg-secondary/10 transition-colors"
+                >
+                  {copied ? 'Copied' : 'Copy email'}
+                </button>
+              </div>
+              <div className="text-on-surface-variant/75">
+                Use the form below to send a message directly — no mail app needed.
+              </div>
               <a href="tel:+84945449758" className="flex flex-wrap items-center gap-3 text-on-surface-variant hover:text-secondary transition-colors">
                 <Phone size={20} /> +84 94 544 9758
               </a>

@@ -12,6 +12,7 @@ type GitHubRepo = {
   language: string | null;
   stargazers_count: number;
   fork: boolean;
+  default_branch?: string;
 };
 
 const GITHUB_USER =
@@ -37,6 +38,24 @@ function tagsForRepo(repo: GitHubRepo): string[] {
   if (fromTopics.length) return fromTopics;
   if (repo.language) return [repo.language];
   return ['GitHub'];
+}
+
+function getProjectImageUrls(repo: GitHubRepo) {
+  const branch = repo.default_branch || 'main';
+  const prefix = `https://raw.githubusercontent.com/${GITHUB_USER}/${encodeURIComponent(
+    repo.name
+  )}/${branch}`;
+
+  return [
+    `${prefix}/project-thumbnail.png`,
+    `${prefix}/.github/project-thumbnail.png`,
+  ];
+}
+
+function getProjectFallbackImageUrl(repo: GitHubRepo) {
+  return `https://opengraph.githubassets.com/1/${GITHUB_USER}/${encodeURIComponent(
+    repo.name
+  )}`;
 }
 
 async function fetchRepos(username: string): Promise<GitHubRepo[]> {
@@ -163,6 +182,32 @@ export default function Projects() {
               transition={{ delay: i * 0.08 }}
               className="group bg-surface-container-highest rounded-2xl sm:rounded-3xl overflow-hidden border border-outline-variant/10 p-6 sm:p-8 hover:border-secondary/40 transition-all block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/50 min-h-0"
             >
+              <div className="overflow-hidden rounded-3xl mb-5 bg-surface-container-low border border-outline-variant/20">
+                <img
+                  src={getProjectImageUrls(project)[0]}
+                  alt={`${project.name} preview`}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-44 object-cover transition duration-300 ease-in-out"
+                  onError={(event) => {
+                    const target = event.currentTarget;
+                    const urls = getProjectImageUrls(project);
+                    const currentIndex = urls.indexOf(target.src);
+
+                    if (currentIndex >= 0 && currentIndex < urls.length - 1) {
+                      target.src = urls[currentIndex + 1];
+                      return;
+                    }
+
+                    const fallback = getProjectFallbackImageUrl(project);
+                    if (target.src !== fallback) {
+                      target.src = fallback;
+                    } else {
+                      target.style.display = 'none';
+                    }
+                  }}
+                />
+              </div>
               <div className="flex items-start justify-between gap-3 mb-3">
                 <h3 className="font-headline font-black text-lg sm:text-xl md:text-2xl text-white group-hover:text-secondary transition-colors break-words min-w-0 pr-2">
                   {project.name.replace(/-/g, ' ')}

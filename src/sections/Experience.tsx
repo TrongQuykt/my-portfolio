@@ -39,6 +39,23 @@ export default function Experience() {
         'Delivered event registration with automated email confirmations for both end users and administrators.',
         'Deployed to production with domain and hosting on inet.vn.'
       ]
+    },
+    {
+      role: 'Freelancer – Brand & Fullstack Developer',
+      company: 'Vietnam Cuong Thinh Co., Ltd.',
+      period: '10/2025 - 01/2026',
+      duration: '4 months',
+      icon: Zap,
+      status: 'Previous',
+      logo: '/assets/images/logos/LOGO VIET NAM CUONG THINH-02.png',
+      metrics: ['Brand concept', 'International UI/UX', 'Amazon-ready frontend'],
+      points: [
+        'Analyzed product features and target market to shape a brand identity for freeze-drying technology.',
+        'Designed brand ideas and visual concepts based on product strengths and international positioning.',
+        'Built a polished frontend experience that is professional, friendly, and optimized for Amazon product presentation.',
+        'Delivered a responsive, global-facing UI/UX tailored for overseas Amazon customers.',
+        'Translated technical freeze-drying benefits into clear messaging for international e-commerce buyers.'
+      ]
     }
   ];
 
