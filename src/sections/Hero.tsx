@@ -37,7 +37,7 @@ export default function Hero() {
   type="button"
   onClick={() => {
     const link = document.createElement('a');
-    link.href = '/assets/files/CV_VyTrongQuy_FullStack .pdf';        // ← Đường dẫn đến file PDF
+    link.href = '/assets/files/CV_VyTrongQuy_Fullstack_EN.pdf';        // ← Đường dẫn đến file PDF
     link.download = 'CV_VyTrongQuy_FullStack.pdf';    // ← Tên file khi tải về
     document.body.appendChild(link);
     link.click();
